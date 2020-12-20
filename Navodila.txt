@@ -1,0 +1,74 @@
+//TODO  Navodila: Youtube / Code in Flow / https://www.youtube.com/watch?v=0s6x3Sn4eYo
+
+//TODO  Swipe Between Activities Android Studio (https://www.youtube.com/watch?v=kKqZoS4THnY)
+
+//TODO  Change Activity By Right or Left Swipe Android Studio With Source Codehttps://www.youtube.com/watch?v=Gsuz2j11qgc)
+
+//TODO ANIMACIJE dodamo v resources: desni klik na res / New / Android resource directory
+//TODO nastavimo Resource type na anim in pustimo tudi Directory name na anim
+//TODO z desnim klikom na anim / new / Animation resource file ustvarimo spodnje štiri xml datoteke
+//TODO vsakič nastavimo samo ime, nato pa v editorju kopiramo spodnjo kodo
+
+//TODO Če imamo datoteke že pripravljene, jih v raziskovalcu označimo, kopiramo in v Android studiu izberemo res ter paste-amo
+//TODO slide_in_left.xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromXDelta="-100%p"
+        android:toXDelta="0" />
+</set>
+//TODO slide_in_right.xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromXDelta="100%p"
+        android:toXDelta="0" />
+</set>
+//TODO slide_out_left.xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromXDelta="0"
+        android:toXDelta="-100%p" />
+</set>
+//TODO slide_out_right.xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromXDelta="0"
+        android:toXDelta="100%p" />
+</set>
+
+//TODO Animacije lahko pokličemo pri vsakem prehodu med aktivnostmi ali pa to naredimo s style
+//TODO V tem programu je prikazan način, kjer animacijo pokličemo pri vsakem prehodu s kodo.
+
+//TODO Animacijo uporabimo tako, da tik ZA startActivity dodamo
+//TODO overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+//TODO za animacijo pri vrčanju nazaj overridamo onfinish() ali onBackPressed()
+//TODO ker se lahko aktivnost zaključi tudi programsko in ne le onBackPressed, je bolje overridati finish()
+//TODO tik za super.finish() oz. super.onBackPressed() dodamo obratno animacijo
+//TODO overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
+//TODO Da deluje tudi SW gumb za nazaj, če ga imamo zgoraj levo (gumb UP)
+//TODO overridamo onOptionsItemSelected(@NonNull MenuItem item)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+//TODO swipe sprogramiramo tako, da overridamo metodo onTouchEvent
+//TODO gledamo x koordinati, kjer se je uporabnik dotaknil in kjer je dvignil prst in ugotovimo ali je slidal levo ali desno
+//TODO seveda gre tudi gor/dol z uporabo y koordinate
